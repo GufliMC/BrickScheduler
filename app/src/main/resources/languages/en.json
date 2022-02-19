@@ -1,0 +1,10 @@
+{
+  "cmd.error.permission": "<red>You don't have permission for this command.",
+  "cmd.error.player-only": "<red>This command can only be executed by a player.",
+  "cmd.error.console-only": "<red>This command can only be executed by the console.",
+
+  "cmd.error.args": "<dark_red>{1} <red>is not a valid <dark_red>{0}<red>.",
+  "cmd.error.args.player": "<red>The player <dark_red>{0} <red>is not online.",
+  "cmd.error.args.number": "<red>{0} is not a valid number.",
+  "cmd.error.args.boolean": "<red>{0} is not a valid boolean."
+}

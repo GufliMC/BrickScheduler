@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+dependencies {
+    compileOnly 'com.github.Minestom:Minestom:-SNAPSHOT'
+    compileOnly "net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "Jorisg"
+            url = uri("https://repo.jorisg.com/snapshots")
+            credentials(org.gradle.api.credentials.PasswordCredentials)
+        }
+    }
+
+    publications {
+        release(MavenPublication) {
+            from components.java
+            groupId = rootProject.group
+            artifactId = project.name
+            version = rootProject.version
+        }
+    }
+}

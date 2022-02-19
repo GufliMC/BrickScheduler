@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+}
+
+group 'org.minestombrick.scheduler'
+version '1.0-SNAPSHOT'
+
+compileJava {
+    sourceCompatibility = 1.17
+    targetCompatibility = 1.17
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.17
+    targetCompatibility = 1.17
+
+    group = this.group;
+    version = this.version;
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    repositories {
+        mavenCentral()
+
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://repo.spongepowered.org/maven' }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+}

@@ -1,0 +1,13 @@
+
+# Intellij
+.idea/
+
+# Gradle
+.gradle/
+gradle.properties
+
+# Build output
+build/
+
+# Minestom
+extensions/
