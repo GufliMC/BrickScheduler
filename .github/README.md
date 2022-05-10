@@ -28,8 +28,8 @@ dependencies {
 
 ### Javadoc
 
-* [Minestom](https://guflimc.github.io/BrickScheduler/minestom)
-* [Spigot](https://guflimc.github.io/BrickScheduler/spigot)
+* [Minestom](https://guflimc.github.io/BrickScheduler/minestom-api)
+* [Spigot](https://guflimc.github.io/BrickScheduler/spigot-api)
 
 ### Examples
 ```java
