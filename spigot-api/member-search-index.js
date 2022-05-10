@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"com.guflimc.brick.scheduler.spigot.api","c":"SpigotScheduler","l":"SpigotScheduler(JavaPlugin, String)","u":"%3Cinit%3E(org.bukkit.plugin.java.JavaPlugin,java.lang.String)"}];updateSearchResults();
