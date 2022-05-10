@@ -1,0 +1,6 @@
+
+dependencies {
+    implementation project(':api')
+
+    compileOnly 'com.google.guava:guava:23.0'
+}
