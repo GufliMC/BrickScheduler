@@ -1,4 +1,4 @@
-package org.minestombrick.scheduler.api;
+package com.guflimc.brick.scheduler.api;
 
 public class SchedulerAPI {
 

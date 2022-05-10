@@ -1,10 +1,15 @@
 # BrickScheduler
 
-An extension for [Minestom](https://github.com/Minestom/Minestom) with more scheduling options.
+A Minecraft library for scheduling things.
 
-## API
+## Platforms
 
-### Maven setup
+* [x] Minestom
+* [x] Spigot / Paper
+
+## Usage
+### Gradle
+
 ```
 repositories {
     maven { url "https://repo.jorisg.com/snapshots" }
@@ -13,23 +18,30 @@ repositories {
 
 ```
 dependencies {
-    implementation 'org.minestombrick.scehduler:api:1.0-SNAPSHOT'
+    // minestom
+    implementation 'com.guflimc.brick.scheduler:minestom-api:1.0-SNAPSHOT'
+    
+    // spigot
+    implementation 'com.guflimc.brick.scheduler:spigot-api:1.0-SNAPSHOT'
 }
 ```
 
-### Usage
+### Javadoc
 
-Check the [javadocs](https://minestombrick.github.io/BrickScheduler/)
+* [Minestom](https://guflimc.github.io/BrickScheduler/minestom)
+* [Spigot](https://guflimc.github.io/BrickScheduler/spigot)
 
-#### Examples
+### Examples
 ```java
+Scheduler scheduler = new SpigotScheduler("name", plugin);
+
 // async
-SchedulerAPI.get().asyncLater(() -> {
+scheduler.asyncLater(() -> {
     System.out.println("poggers");
 }, 1, ChronoUnit.SECONDS);
 
 // sync
-SchedulerAPI.get().syncLater(() -> {
+scheduler.syncLater(() -> {
     System.out.println("poggers");
 }, 1, ChronoUnit.SECONDS);
 ```

@@ -1,46 +1,29 @@
-/*
- * This file is part of KingdomCraft.
- *
- * KingdomCraft is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * KingdomCraft is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with KingdomCraft. If not, see <https://www.gnu.org/licenses/>.
- */
-
-package org.minestombrick.scheduler.app;
+package com.guflimc.brick.scheduler.common;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import net.minestom.server.MinecraftServer;
-import org.jetbrains.annotations.NotNull;
-import org.minestombrick.scheduler.api.Scheduler;
-import org.minestombrick.scheduler.api.SchedulerTask;
+import com.guflimc.brick.scheduler.api.Scheduler;
+import com.guflimc.brick.scheduler.api.SchedulerTask;
 
 import java.util.concurrent.*;
 
 public class ThreadPoolScheduler implements Scheduler {
 
     private final ScheduledThreadPoolExecutor scheduler;
-    private final CustomExecutor schedulerWorkerPool;
+    private final ErrorHandlerExecutor schedulerWorkerPool;
     private final ForkJoinPool worker;
 
-    private final MinestomExecutor syncExecutor = new MinestomExecutor();
+    private final Executor syncExecutor;
 
-    public ThreadPoolScheduler(String id) {
+    public ThreadPoolScheduler(String id, Executor syncExecutor) {
+        this.syncExecutor = syncExecutor;
+
         this.scheduler = new ScheduledThreadPoolExecutor(1, new ThreadFactoryBuilder()
                 .setDaemon(true)
                 .setNameFormat(id + "-scheduler")
                 .build()
         );
         this.scheduler.setRemoveOnCancelPolicy(true);
-        this.schedulerWorkerPool = new CustomExecutor(Executors.newCachedThreadPool(new ThreadFactoryBuilder()
+        this.schedulerWorkerPool = new ErrorHandlerExecutor(Executors.newCachedThreadPool(new ThreadFactoryBuilder()
                 .setDaemon(true)
                 .setNameFormat(id + "-schedule-worker-%d")
                 .build()
@@ -82,26 +65,16 @@ public class ThreadPoolScheduler implements Scheduler {
         return () -> future.cancel(false);
     }
 
-    private static final class CustomExecutor implements Executor {
-        private final ExecutorService delegate;
+    ///////////////////////////////////////////////////////////////////////////
 
-        private CustomExecutor(ExecutorService delegate) {
-            this.delegate = delegate;
-        }
-
+    private record ErrorHandlerExecutor(ExecutorService delegate) implements Executor {
         @Override
         public void execute(Runnable command) {
-            this.delegate.execute(new CustomRunnable(command));
+            this.delegate.execute(new ErrorBoundaryRunnable(command));
         }
     }
 
-    private static final class CustomRunnable implements Runnable {
-        private final Runnable delegate;
-
-        private CustomRunnable(Runnable delegate) {
-            this.delegate = delegate;
-        }
-
+    private record ErrorBoundaryRunnable(Runnable delegate) implements Runnable {
         @Override
         public void run() {
             try {
@@ -109,13 +82,6 @@ public class ThreadPoolScheduler implements Scheduler {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private final static class MinestomExecutor implements Executor {
-        @Override
-        public void execute(@NotNull Runnable command) {
-            MinecraftServer.getSchedulerManager().buildTask(command).schedule();
         }
     }
 }

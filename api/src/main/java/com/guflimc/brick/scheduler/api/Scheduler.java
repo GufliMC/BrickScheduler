@@ -1,4 +1,4 @@
-package org.minestombrick.scheduler.api;
+package com.guflimc.brick.scheduler.api;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -6,12 +6,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 public interface Scheduler {
-
-    static Scheduler get() {
-        return SchedulerAPI.get();
-    }
-
-    //
 
     Executor sync();
 

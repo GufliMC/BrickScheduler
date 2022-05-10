@@ -1,14 +1,9 @@
 plugins {
-    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-group 'org.minestombrick.scheduler'
+group 'com.guflimc.brick.scheduler'
 version '1.0-SNAPSHOT'
-
-compileJava {
-    sourceCompatibility = 1.17
-    targetCompatibility = 1.17
-}
 
 subprojects {
     apply plugin: 'java'
@@ -25,9 +20,40 @@ subprojects {
 
     repositories {
         mavenCentral()
+    }
 
-        maven { url 'https://jitpack.io' }
-        maven { url 'https://repo.spongepowered.org/maven' }
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    dependencies {
+        compileOnly 'org.jetbrains:annotations:23.0.0'
+    }
+}
+
+
+configure(subprojects.findAll {it.name.contains('-api')}) {
+    apply plugin: 'com.github.johnrengelman.shadow'
+    apply plugin: 'maven-publish'
+
+    shadowJar {
+        archiveClassifier.set("${project.name}")
+        archiveBaseName.set("${rootProject.name}")
+        archiveVersion.set("${rootProject.version}")
+    }
+
+    publishing {
+        repositories {
+            maven {
+                name = "Jorisg"
+                url = uri("https://repo.jorisg.com/snapshots")
+                credentials(org.gradle.api.credentials.PasswordCredentials)
+            }
+        }
+
+        publications {
+            release(MavenPublication) {
+                from components.java
+                groupId = rootProject.group
+                artifactId = project.name
+                version = rootProject.version
+            }
+        }
     }
 }
