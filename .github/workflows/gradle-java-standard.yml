@@ -1,4 +1,4 @@
-name: Gradle test, publish, javadoc and release
+name: Gradle test, publish and javadoc
 
 on:
   push:
@@ -22,7 +22,3 @@ jobs:
       projects: |
         minestom-api
         spigot-api
-
-  pre-release:
-    needs: test
-    uses: GufliOfficial/.github/.github/workflows/java-gradle-github-release.yml@main
