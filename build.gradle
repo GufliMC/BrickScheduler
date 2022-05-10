@@ -1,6 +1,3 @@
-plugins {
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
-}
 
 group 'com.guflimc.brick.scheduler'
 version '1.0-SNAPSHOT'
@@ -29,14 +26,7 @@ subprojects {
 
 
 configure(subprojects.findAll {it.name.contains('-api')}) {
-    apply plugin: 'com.github.johnrengelman.shadow'
     apply plugin: 'maven-publish'
-
-    shadowJar {
-        archiveClassifier.set("${project.name}")
-        archiveBaseName.set("${rootProject.name}")
-        archiveVersion.set("${rootProject.version}")
-    }
 
     publishing {
         repositories {
