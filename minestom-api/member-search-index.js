@@ -1,1 +1,0 @@
-memberSearchIndex = [{"p":"com.guflimc.brick.scheduler.minestom.api","c":"MinestomScheduler","l":"get()"},{"p":"com.guflimc.brick.scheduler.minestom.api","c":"MinestomScheduler","l":"MinestomScheduler(String)","u":"%3Cinit%3E(java.lang.String)"}];updateSearchResults();

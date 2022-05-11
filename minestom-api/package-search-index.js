@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.guflimc.brick.scheduler.minestom.api"}];updateSearchResults();
