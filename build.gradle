@@ -5,14 +5,15 @@ plugins {
 group 'com.guflimc.brick.scheduler'
 version '1.0-SNAPSHOT'
 
-ext.set("javadocProjects", [project(':spigot-api'), project(':minestom-api'), project(':api')])
-ext.set("publishProjects", [project(':spigot-api'), project(':minestom-api')])
+def javadocProjects = [project(':spigot-api'), project(':minestom-api'), project(':api')]
+ext.set("javadocProjects", javadocProjects)
 
-apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-default.gradle'
-apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-javadoc.gradle'
-apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-publish.gradle'
+def publishProjects = [project(':spigot-api'), project(':minestom-api')]
+ext.set("publishProjects", publishProjects)
 
+// jars that will be published need to include subproject api's
 subprojects {
+    apply plugin: 'java'
     apply plugin: 'com.github.johnrengelman.shadow'
 
     // configure shadow jar
@@ -22,6 +23,9 @@ subprojects {
         archiveBaseName.set("${rootProject.name}")
     }
 
-    // disable default jar task
     jar.enabled = false
 }
+
+apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-default.gradle'
+apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-javadoc.gradle'
+apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-publish.gradle'
