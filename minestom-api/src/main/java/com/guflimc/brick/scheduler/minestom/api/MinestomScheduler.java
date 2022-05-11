@@ -18,7 +18,7 @@ public class MinestomScheduler extends ThreadPoolScheduler implements Scheduler 
      * Get the default instance of the scheduler.
      * @return the default instance of the scheduler
      */
-    public MinestomScheduler get() {
+    public static MinestomScheduler get() {
         return INSTANCE;
     }
 
