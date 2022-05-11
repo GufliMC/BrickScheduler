@@ -1,3 +1,6 @@
+plugins {
+    id 'java'
+}
 
 group 'com.guflimc.brick.scheduler'
 version '1.0-SNAPSHOT'
@@ -21,6 +24,10 @@ subprojects {
 
     dependencies {
         compileOnly 'org.jetbrains:annotations:23.0.0'
+    }
+
+    tasks.withType(Javadoc).all {
+        enabled = false
     }
 }
 
@@ -46,4 +53,16 @@ configure(subprojects.findAll {it.name.contains('-api')}) {
             }
         }
     }
+}
+
+def javadocProjects = [
+        "api",
+        "minestom-api",
+        "spigot-api",
+]
+
+javadoc {
+    source javadocProjects.collect { project(it).sourceSets.main.allJava }
+    classpath = files(javadocProjects.collect { project(it).sourceSets.main.compileClasspath })
+    destinationDir = file("${buildDir}/docs/javadoc")
 }

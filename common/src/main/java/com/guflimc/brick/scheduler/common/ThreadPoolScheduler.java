@@ -3,6 +3,7 @@ package com.guflimc.brick.scheduler.common;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.guflimc.brick.scheduler.api.Scheduler;
 import com.guflimc.brick.scheduler.api.SchedulerTask;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.*;
 
@@ -42,26 +43,36 @@ public class ThreadPoolScheduler implements Scheduler {
     }
 
     @Override
-    public SchedulerTask asyncLater(Runnable task, long delay, TimeUnit unit) {
+    public SchedulerTask asyncLater(@NotNull Runnable task, long delay, @NotNull TimeUnit unit) {
         ScheduledFuture<?> future = this.scheduler.schedule(() -> this.schedulerWorkerPool.execute(task), delay, unit);
         return () -> future.cancel(false);
     }
 
     @Override
-    public SchedulerTask asyncRepeating(Runnable task, long interval, TimeUnit unit) {
-        ScheduledFuture<?> future = this.scheduler.scheduleAtFixedRate(() -> this.schedulerWorkerPool.execute(task), interval, interval, unit);
+    public SchedulerTask asyncRepeating(@NotNull Runnable task, long interval, @NotNull TimeUnit unit) {
+        return asyncRepeating(task, 0, interval, unit);
+    }
+
+    @Override
+    public SchedulerTask asyncRepeating(@NotNull Runnable task, long delay, long interval, @NotNull TimeUnit unit) {
+        ScheduledFuture<?> future = this.scheduler.scheduleAtFixedRate(() -> this.schedulerWorkerPool.execute(task), delay, interval, unit);
         return () -> future.cancel(false);
     }
 
     @Override
-    public SchedulerTask syncLater(Runnable task, long delay, TimeUnit unit) {
+    public SchedulerTask syncLater(@NotNull Runnable task, long delay, @NotNull TimeUnit unit) {
         ScheduledFuture<?> future = this.scheduler.schedule(() -> this.sync().execute(task), delay, unit);
         return () -> future.cancel(false);
     }
 
     @Override
-    public SchedulerTask syncRepeating(Runnable task, long interval, TimeUnit unit) {
-        ScheduledFuture<?> future = this.scheduler.scheduleAtFixedRate(() -> this.sync().execute(task), interval, interval, unit);
+    public SchedulerTask syncRepeating(@NotNull Runnable task, long interval, @NotNull TimeUnit unit) {
+        return syncRepeating(task, 0, interval, unit);
+    }
+
+    @Override
+    public SchedulerTask syncRepeating(@NotNull Runnable task, long delay, long interval, @NotNull TimeUnit unit) {
+        ScheduledFuture<?> future = this.scheduler.scheduleAtFixedRate(() -> this.sync().execute(task), delay, interval, unit);
         return () -> future.cancel(false);
     }
 

@@ -17,8 +17,4 @@ jobs:
 
   javadoc:
     needs: test
-    uses: GufliOfficial/.github/.github/workflows/java-gradle-multi-javadoc.yml@main
-    with:
-      projects: |
-        minestom-api
-        spigot-api
+    uses: GufliOfficial/.github/.github/workflows/java-gradle-javadoc.yml@main
