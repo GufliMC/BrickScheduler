@@ -1,68 +1,27 @@
 plugins {
-    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2' apply false
 }
 
 group 'com.guflimc.brick.scheduler'
 version '1.0-SNAPSHOT'
 
+ext.set("javadocProjects", [project(':spigot-api'), project(':minestom-api'), project(':api')])
+ext.set("publishProjects", [project(':spigot-api'), project(':minestom-api')])
+
+apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-default.gradle'
+apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-javadoc.gradle'
+apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-publish.gradle'
+
 subprojects {
-    apply plugin: 'java'
+    apply plugin: 'com.github.johnrengelman.shadow'
 
-    sourceCompatibility = 1.17
-    targetCompatibility = 1.17
-
-    group = this.group;
-    version = this.version;
-
-    tasks.withType(JavaCompile) {
-        options.encoding = 'UTF-8'
+    // configure shadow jar
+    shadowJar {
+        archiveClassifier.set("")
+        archiveAppendix.set("${project.name}")
+        archiveBaseName.set("${rootProject.name}")
     }
 
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        compileOnly 'org.jetbrains:annotations:23.0.0'
-    }
-
-    tasks.withType(Javadoc).all {
-        enabled = false
-    }
-}
-
-
-configure(subprojects.findAll {it.name.contains('-api')}) {
-    apply plugin: 'maven-publish'
-
-    publishing {
-        repositories {
-            maven {
-                name = "Jorisg"
-                url = uri("https://repo.jorisg.com/snapshots")
-                credentials(org.gradle.api.credentials.PasswordCredentials)
-            }
-        }
-
-        publications {
-            release(MavenPublication) {
-                from components.java
-                groupId = rootProject.group
-                artifactId = project.name
-                version = rootProject.version
-            }
-        }
-    }
-}
-
-def javadocProjects = [
-        "api",
-        "minestom-api",
-        "spigot-api",
-]
-
-javadoc {
-    source javadocProjects.collect { project(it).sourceSets.main.allJava }
-    classpath = files(javadocProjects.collect { project(it).sourceSets.main.compileClasspath })
-    destinationDir = file("${buildDir}/docs/javadoc")
+    // disable default jar task
+    jar.enabled = false
 }
