@@ -12,7 +12,7 @@ def publishProjects = [project(':spigot-api'), project(':minestom-api')]
 ext.set("publishProjects", publishProjects)
 
 // jars that will be published need to include subproject api's
-subprojects {
+configure(publishProjects) {
     apply plugin: 'java'
     apply plugin: 'com.github.johnrengelman.shadow'
 
