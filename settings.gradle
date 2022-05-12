@@ -1,7 +1,6 @@
 rootProject.name = 'BrickScheduler'
 
 include 'api'
-include 'common'
 include 'minestom-api'
 include 'spigot-api'
 

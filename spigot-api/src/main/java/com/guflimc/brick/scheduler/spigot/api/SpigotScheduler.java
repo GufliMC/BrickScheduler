@@ -1,7 +1,7 @@
 package com.guflimc.brick.scheduler.spigot.api;
 
 import com.guflimc.brick.scheduler.api.Scheduler;
-import com.guflimc.brick.scheduler.common.ThreadPoolScheduler;
+import com.guflimc.brick.scheduler.api.ThreadPoolScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;

@@ -1,7 +1,7 @@
 package com.guflimc.brick.scheduler.minestom.api;
 
 import com.guflimc.brick.scheduler.api.Scheduler;
-import com.guflimc.brick.scheduler.common.ThreadPoolScheduler;
+import com.guflimc.brick.scheduler.api.ThreadPoolScheduler;
 import net.minestom.server.MinecraftServer;
 import org.jetbrains.annotations.NotNull;
 

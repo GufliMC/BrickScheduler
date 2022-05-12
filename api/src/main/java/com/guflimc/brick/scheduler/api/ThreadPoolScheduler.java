@@ -1,8 +1,6 @@
-package com.guflimc.brick.scheduler.common;
+package com.guflimc.brick.scheduler.api;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.guflimc.brick.scheduler.api.Scheduler;
-import com.guflimc.brick.scheduler.api.SchedulerTask;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.*;
