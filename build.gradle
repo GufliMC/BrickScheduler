@@ -1,9 +1,10 @@
 plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2' apply false
+    id 'pl.allegro.tech.build.axion-release' version '1.13.6'
 }
 
 group 'com.guflimc.brick.scheduler'
-version '1.0-SNAPSHOT'
+version = scmVersion.version
 
 def javadocProjects = [project(':spigot-api'), project(':minestom-api'), project(':api')]
 ext.set("javadocProjects", javadocProjects)
