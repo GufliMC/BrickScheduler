@@ -1,7 +1,7 @@
 package com.guflimc.brick.scheduler.minestom.api;
 
+import com.guflimc.brick.scheduler.api.BrickThreadPoolScheduler;
 import com.guflimc.brick.scheduler.api.Scheduler;
-import com.guflimc.brick.scheduler.api.ThreadPoolScheduler;
 import net.minestom.server.MinecraftServer;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,7 +10,7 @@ import java.util.concurrent.Executor;
 /**
  * The minestom implementation of {@link Scheduler}.
  */
-public class MinestomScheduler extends ThreadPoolScheduler implements Scheduler {
+public class MinestomScheduler extends BrickThreadPoolScheduler implements Scheduler {
 
     private final static MinestomScheduler INSTANCE = new MinestomScheduler("BrickScheduler");
 

@@ -1,5 +1,4 @@
 plugins {
-    id 'com.github.johnrengelman.shadow' version '7.1.2' apply false
     id 'pl.allegro.tech.build.axion-release' version '1.13.6'
 }
 
@@ -9,10 +8,13 @@ version = scmVersion.version
 def javadocProjects = [project(':spigot-api'), project(':minestom-api'), project(':api')]
 ext.set("javadocProjects", javadocProjects)
 
-def publishProjects = [project(':spigot-api'), project(':minestom-api')]
+def publishProjects = [project(':spigot-api'), project(':minestom-api'), project(':api')]
 ext.set("publishProjects", publishProjects)
+
+subprojects {
+    apply plugin: 'java-library'
+}
 
 apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-default.gradle'
 apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-javadoc.gradle'
-apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-shadow.gradle'
-apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-publish-shadow.gradle'
+apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-publish.gradle'

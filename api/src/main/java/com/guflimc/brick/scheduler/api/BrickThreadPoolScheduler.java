@@ -1,11 +1,10 @@
 package com.guflimc.brick.scheduler.api;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.*;
 
-public class ThreadPoolScheduler implements Scheduler {
+public class BrickThreadPoolScheduler implements Scheduler {
 
     private final ScheduledThreadPoolExecutor scheduler;
     private final ErrorHandlerExecutor schedulerWorkerPool;
@@ -13,20 +12,12 @@ public class ThreadPoolScheduler implements Scheduler {
 
     private final Executor syncExecutor;
 
-    public ThreadPoolScheduler(String id, Executor syncExecutor) {
+    public BrickThreadPoolScheduler(String id, Executor syncExecutor) {
         this.syncExecutor = syncExecutor;
 
-        this.scheduler = new ScheduledThreadPoolExecutor(1, new ThreadFactoryBuilder()
-                .setDaemon(true)
-                .setNameFormat(id + "-scheduler")
-                .build()
-        );
+        this.scheduler = new ScheduledThreadPoolExecutor(4, new BrickThreadFactory(id + "-scheduler"));
         this.scheduler.setRemoveOnCancelPolicy(true);
-        this.schedulerWorkerPool = new ErrorHandlerExecutor(Executors.newCachedThreadPool(new ThreadFactoryBuilder()
-                .setDaemon(true)
-                .setNameFormat(id + "-schedule-worker-%d")
-                .build()
-        ));
+        this.schedulerWorkerPool = new ErrorHandlerExecutor(Executors.newCachedThreadPool(new BrickThreadFactory(id + "-schedule-worker")));
         this.worker = new ForkJoinPool(32, ForkJoinPool.defaultForkJoinWorkerThreadFactory, (t, e) -> e.printStackTrace(), false);
     }
 
