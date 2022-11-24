@@ -21,6 +21,13 @@ public class BrickThreadPoolScheduler implements Scheduler {
         this.worker = new ForkJoinPool(32, ForkJoinPool.defaultForkJoinWorkerThreadFactory, (t, e) -> e.printStackTrace(), false);
     }
 
+    protected void shutdown() throws InterruptedException {
+        scheduler.shutdown();
+        worker.shutdown();
+        scheduler.awaitTermination(5, TimeUnit.SECONDS);
+        worker.awaitTermination(5, TimeUnit.SECONDS);
+    }
+
     @Override
     public Executor sync() {
         return syncExecutor;

@@ -16,6 +16,7 @@ public class MinestomScheduler extends BrickThreadPoolScheduler implements Sched
 
     /**
      * Get the default instance of the scheduler.
+     *
      * @return the default instance of the scheduler
      */
     public static MinestomScheduler get() {
@@ -26,6 +27,7 @@ public class MinestomScheduler extends BrickThreadPoolScheduler implements Sched
 
     /**
      * Create a scheduler with the given id.
+     *
      * @param id the id
      */
     public MinestomScheduler(String id) {
@@ -37,5 +39,9 @@ public class MinestomScheduler extends BrickThreadPoolScheduler implements Sched
         public void execute(@NotNull Runnable command) {
             MinecraftServer.getSchedulerManager().buildTask(command).schedule();
         }
+    }
+
+    public void shutdown() throws InterruptedException {
+        super.shutdown();
     }
 }
