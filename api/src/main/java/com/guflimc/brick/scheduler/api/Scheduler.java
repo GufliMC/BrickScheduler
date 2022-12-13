@@ -2,6 +2,7 @@ package com.guflimc.brick.scheduler.api;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -124,6 +125,16 @@ public interface Scheduler {
             }
         });
         return future;
+    }
+
+    /**
+     * Create a countdown that calls a consumer every tick but also allows milestone subscriptions
+     * at certain points in time.
+     * @param duration the duration of the countdown
+     * @return the countdown builder
+     */
+    default CountdownBuilder countdown(Duration duration) {
+        return new CountdownBuilder(this, duration);
     }
 
 }
