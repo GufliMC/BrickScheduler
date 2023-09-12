@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
@@ -141,7 +141,7 @@ implements <a href="Scheduler.html" title="interface in com.guflimc.brick.schedu
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Schedules a task to be repeatedly executed on a separate thread.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shutdown()" class="member-name-link">shutdown</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></code></div>
@@ -171,6 +171,10 @@ implements <a href="Scheduler.html" title="interface in com.guflimc.brick.schedu
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Schedules a task to be repeatedly executed on the main thread.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#terminate(long,java.util.concurrent.TimeUnit)" class="member-name-link">terminate</a><wbr>(long&nbsp;timeout,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/TimeUnit.html" title="class or interface in java.util.concurrent" class="external-link">TimeUnit</a>&nbsp;unit)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -209,10 +213,19 @@ implements <a href="Scheduler.html" title="interface in com.guflimc.brick.schedu
 <li>
 <section class="detail" id="shutdown()">
 <h3>shutdown</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">shutdown</span>()
-                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">shutdown</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="terminate(long,java.util.concurrent.TimeUnit)">
+<h3>terminate</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">terminate</span><wbr><span class="parameters">(long&nbsp;timeout,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/TimeUnit.html" title="class or interface in java.util.concurrent" class="external-link">TimeUnit</a>&nbsp;unit)</span>
+                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ExecutionException.html" title="class or interface in java.util.concurrent" class="external-link">ExecutionException</a>,
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ExecutionException.html" title="class or interface in java.util.concurrent" class="external-link">ExecutionException</a></code></dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code></dd>
 </dl>
 </section>
