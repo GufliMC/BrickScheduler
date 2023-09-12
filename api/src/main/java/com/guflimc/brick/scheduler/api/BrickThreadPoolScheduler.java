@@ -3,6 +3,7 @@ package com.guflimc.brick.scheduler.api;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class BrickThreadPoolScheduler implements Scheduler {
 
@@ -21,11 +22,31 @@ public class BrickThreadPoolScheduler implements Scheduler {
         this.worker = new ForkJoinPool(32, ForkJoinPool.defaultForkJoinWorkerThreadFactory, (t, e) -> e.printStackTrace(), false);
     }
 
-    protected void shutdown() throws InterruptedException {
-        scheduler.shutdown();
-        worker.shutdown();
-        scheduler.awaitTermination(5, TimeUnit.SECONDS);
-        worker.awaitTermination(5, TimeUnit.SECONDS);
+    public void shutdown() {
+        scheduler.shutdownNow();
+        worker.shutdownNow();
+    }
+
+    public boolean terminate(long timeout, TimeUnit unit) throws ExecutionException, InterruptedException {
+        shutdown();
+        AtomicReference<Boolean> result = new AtomicReference<>(true);
+        CompletableFuture.allOf(
+                CompletableFuture.runAsync(() -> {
+                    try {
+                        result.compareAndSet(true, worker.awaitTermination(timeout, unit));
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }),
+                CompletableFuture.runAsync(() -> {
+                    try {
+                        result.compareAndSet(true, scheduler.awaitTermination(timeout, unit));
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+        ).get();
+        return result.get();
     }
 
     @Override

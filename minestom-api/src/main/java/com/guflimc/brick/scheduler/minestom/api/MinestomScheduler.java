@@ -40,8 +40,4 @@ public class MinestomScheduler extends BrickThreadPoolScheduler implements Sched
             MinecraftServer.getSchedulerManager().buildTask(command).schedule();
         }
     }
-
-    public void shutdown() throws InterruptedException {
-        super.shutdown();
-    }
 }
